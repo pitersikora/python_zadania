@@ -1,0 +1,1 @@
+# pythonzadania-pitersikora
