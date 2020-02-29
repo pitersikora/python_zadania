@@ -5,7 +5,8 @@ try:
     if knights.isdigit() == False:
         print "\033[91mPodana wartosc nie jest liczba !!!\033[00m"
         exit(2)
-except Exception:
+except Exception as exc:
+    print exc
     print "\033[91mPodaj liczbe rycerzy w parametrach startowych programu !!!\033[00m"
     exit(1)
 print "Liczba rycerzy: %s" % knights
@@ -15,9 +16,10 @@ for i in range(0, int(knights)):
     death_ring.append(i+1)
 
 round_counter = 1
-round_string = ""
-temporary_list = []
+
 while len(death_ring) != 1:
+    round_string = ""
+    temporary_list = []
     print "\nRunda: %s\n" % round_counter
     for i in range(0, len(death_ring)):
         if i % 2 == 0:
@@ -30,8 +32,6 @@ while len(death_ring) != 1:
         temporary_list.insert(0, temporary_list[-1])
         del temporary_list[-1]
     death_ring = temporary_list
-    temporary_list = []
     round_counter += 1
-    round_string = ""
 
 print "\nW kregu smierci zlozonym z %s rycerzy, lepiej zebys stal na \033[92m%d\033[00m miejscu !!!" % (knights, death_ring[0])
