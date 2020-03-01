@@ -1,13 +1,16 @@
+# Program do symulacji "Problemu Jozefa Flawiusza" - w parametrach startowych programu
+# nalezy podac liczbe rycerzy bioracych udzial w symulacji.
+
 import sys
-print "Program symulujacy problem Jozefa Flawiusza\n"
+print 'Program symulujacy problem Jozefa Flawiusza\n'
 try:
     knights = sys.argv[1]
     if knights.isdigit() == False:
-        print "\033[91mPodana wartosc nie jest liczba !!!\033[00m"
+        print '\033[91mPodana wartosc nie jest liczba !!!\033[00m'
         exit(2)
 except Exception as exc:
     print exc
-    print "\033[91mPodaj liczbe rycerzy w parametrach startowych programu !!!\033[00m"
+    print '\033[91mPodaj liczbe rycerzy w parametrach startowych programu !!!\033[00m'
     exit(1)
 print "Liczba rycerzy: %s" % knights
 
