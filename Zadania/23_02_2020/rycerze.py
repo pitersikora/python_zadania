@@ -6,13 +6,14 @@ import sys
 def get_input(user_input):
     print ('Program symulujacy problem Jozefa Flawiusza\n')
     try:
+        if user_input == None:
+            print('\033[91mNie podano wartosci !!!\033[00m')
+            exit(1)
         if user_input.isdigit() == False:
             print ('\033[91mPodana wartosc nie jest liczba !!!\033[00m')
             exit(2)
     except Exception as exc:
         print (exc)
-        print ('\033[91mPodaj liczbe rycerzy w parametrach startowych programu !!!\033[00m')
-        exit(1)
     print ("Liczba rycerzy: %s" % user_input)
     return int(user_input)
 
@@ -21,7 +22,7 @@ def generate_knights(knights):
     if knights == None:
         print ('\033[91mNiewlasciwy argument funkcji!!!\033[00m')
         exit(3)
-    for i in range(0, int(knights)):
+    for i in range(0, knights):
         generated_ring.append(i+1)
     return generated_ring
 
@@ -52,6 +53,9 @@ def print_result(array_to_fill, knights):
     print ("\nW kregu smierci zlozonym z %s rycerzy, lepiej zebys stal na \033[92m%d\033[00m miejscu !!!" % (knights, array_to_fill[0]))
 
 def main():
+    if len(sys.argv) < 2:
+        print ('\033[91mPodaj liczbe rycerzy w parametrach startowych programu !!!\033[00m')
+        exit(1)
     knights_ammount = get_input(sys.argv[1])
     print (knights_ammount)
     death_ring = generate_knights(knights_ammount)
