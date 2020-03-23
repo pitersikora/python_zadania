@@ -1,11 +1,13 @@
 # fibo_matrix.py
 
-def multiply_matrix(m1, m2):
+def multiply_matrix(matrix1, matrix2):
     product = [[0,0], [0,0]]
-    product[0][0] = m1[0][0] * m2[0][0] + m1[0][1] * m2[1][0]
-    product[0][1] = m1[0][0] * m2[0][1] + m1[0][1] * m2[1][1]
-    product[1][0] = m1[1][0] * m2[0][0] + m1[1][1] * m2[1][0]
-    product[1][1] = m1[1][0] * m2[0][1] + m1[1][1] * m2[1][1]
+
+    product[0][0] = matrix1[0][0] * matrix2[0][0] + matrix1[0][1] * matrix2[1][0]
+    product[0][1] = matrix1[0][0] * matrix2[0][1] + matrix1[0][1] * matrix2[1][1]
+    product[1][0] = matrix1[1][0] * matrix2[0][0] + matrix1[1][1] * matrix2[1][0]
+    product[1][1] = matrix1[1][0] * matrix2[0][1] + matrix1[1][1] * matrix2[1][1]
+
     return product
 
 def fast_matrix_power(base_matrix, exponent):
