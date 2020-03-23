@@ -1,11 +1,14 @@
 # Square.py
 
-import math
+number = int(input("Podaj liczbe\n"))
+counter = 1
+result = 1
 
-number = input("Podaj liczbe\n")
-number = math.sqrt(int(number))
+while(result < number):
+    result = counter * counter
+    counter += 1
 
-if number.is_integer():
-    print('Liczba jest kwadratem innej liczby, ta liczba to %d' % number)
+if result == number:
+    print('TAK, liczba jest kwadratem innej liczby')
 else:
-    print('Liczba nie jest kwadratem innej liczby')
+    print('NIE')
