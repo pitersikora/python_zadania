@@ -32,3 +32,15 @@ Do egzekucji programów należy używać interpretera Python w wersji 3.
 1. 22_03_2020
 
     * Program do sprawdzania, czy liczba całkowita jest kwadratem innej liczby `square.py`
+
+    * Program do sprawdzania, czy liczba całkowita jest liczbą pierwszą `prime_number.py`
+
+    * Program wyznaczający dowolną liczbę Fibonacciego iteracyjnie `fibonacci.py`
+
+    * Program wyznaczający dowolną liczbę Fibonacciego metodą potęgowania macierzy `fibo_matrix.py`
+
+    * Program sortujący podaną listę liczb metodą bąbelkową `bubblesort.py`
+
+    * Program sortujący podaną listę liczb metodą wstawiania `insertsort.py`
+
+    * Program obliczający wyrażenie arytmetyczne podane w odwrotnej notacji polskiej `postfix.py`
