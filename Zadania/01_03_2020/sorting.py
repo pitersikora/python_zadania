@@ -1,7 +1,7 @@
 def bubble_sort(list_of_numbers):
     temp_list = list_of_numbers
     for number in temp_list:
-        for i in range(0, len(temp_list) - 1):
+        for i in range(0, len(temp_list) - number - 1):
             if temp_list[i] > temp_list[i+1]:
                 temp_list[i], temp_list[i+1] = temp_list[i+1], temp_list[i]
     return temp_list
