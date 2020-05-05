@@ -7,6 +7,7 @@ from Organisms.Wolf import Wolf
 from Organisms.Toadstool import Toadstool
 from Organisms.Antelope import Antelope
 from Organisms.Turtle import Turtle
+from Organisms.Ufo import Ufo
 import os
 
 

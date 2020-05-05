@@ -71,6 +71,8 @@ class Animal(Organism):
 			if self.sign is "@":
 				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
 				atackingOrganism.stomach = self
+			elif self.sign is "U":
+				atackingOrganism.position = atackingOrganism.lastPosition
 			else:
 				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
 		return result

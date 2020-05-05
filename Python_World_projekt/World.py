@@ -14,6 +14,7 @@ class World(object):
 		self.__turn = 0
 		self.__organisms = []
 		self.__newOrganisms = []
+		self.__stopTime = []
 		self.__separator = ' '
 
 	@property
@@ -41,6 +42,14 @@ class World(object):
 		self.__organisms = value
 
 	@property
+	def stopTime(self):
+		return self.__stopTime
+
+	@stopTime.setter
+	def stopTime(self, value):
+		self.__stopTime = value
+
+	@property
 	def newOrganisms(self):
 		return self.__newOrganisms
 
@@ -54,9 +63,11 @@ class World(object):
 
 	def makeTurn(self):
 		actions = []
-
+		for species in self.organisms:
+			if species.sign is "U":
+				self.stopTime.extend(self.getNeighboringPositions(species.position))
 		for org in self.organisms:
-			if self.positionOnBoard(org.position):
+			if self.positionOnBoard(org.position) and org.position not in self.stopTime:
 				actions = org.move()
 				for a in actions:
 					self.makeMove(a)
@@ -69,27 +80,30 @@ class World(object):
 
 		self.organisms = [o for o in self.organisms if self.positionOnBoard(o.position)]
 		for o in self.organisms:
-			o.liveLength -= 1
-			if o.sign is not "@":
-				o.power += 1
-			if isinstance(self.getOrganismFromPosition(o.position), Animal) and o.stomach is not None:
-				if o.stomach.release is True:
-					releasePosition = random.choice(self.filterPositionsWithoutAnimals(self.getNeighboringPositions(o.position)))
-					if releasePosition:
-						o.stomach.position = releasePosition
-						o.stomach.release = False
-						self.newOrganisms.append(o.stomach)
-						o.stomach = None
-				else:
-				 o.stomach.release = True
-			if o.liveLength < 1:
-				print(str(o.__class__.__name__) + ': died of old age at: ' + str(o.position))
+			if o.position not in self.stopTime:
+				if o.sign is not "U":
+					o.liveLength -= 1
+				if o.sign is not "@" and o.sign is not "U":
+					o.power += 1
+				if isinstance(self.getOrganismFromPosition(o.position), Animal) and o.stomach is not None:
+					if o.stomach.release is True:
+						releasePosition = random.choice(self.filterPositionsWithoutAnimals(self.getNeighboringPositions(o.position)))
+						if releasePosition:
+							o.stomach.position = releasePosition
+							o.stomach.release = False
+							self.newOrganisms.append(o.stomach)
+							o.stomach = None
+					else:
+					 o.stomach.release = True
+				if o.liveLength < 1:
+					print(str(o.__class__.__name__) + ': died of old age at: ' + str(o.position))
 		self.organisms = [o for o in self.organisms if o.liveLength > 0]
 
 		self.newOrganisms = [o for o in self.newOrganisms if self.positionOnBoard(o.position)]
 		self.organisms.extend(self.newOrganisms)
 		self.organisms.sort(key=lambda o: o.initiative, reverse=True)
 		self.newOrganisms = []
+		self.stopTime = []
 
 		self.turn += 1
 
