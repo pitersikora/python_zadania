@@ -11,7 +11,7 @@ class Sheep(Animal):
 
 	def initParams(self):
 		self.power = 7
-		self.initiative = 3
+		self.initiative = 4
 		self.liveLength = 10
 		self.powerToReproduce = 6
 		self.sign = 'S'
