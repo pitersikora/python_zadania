@@ -51,17 +51,12 @@ class Antelope(Animal):
 		result = []
 		pomPositions = []
 		pomPositions = self.calculateDodgePath(attackerLastPosition)
-		for strPos in pomPositions:
-			print(strPos.x, strPos.y)
 		for filed in pomPositions:
 			posToCheck = []
 			posToCheck.append(filed)
 			if self.world.positionOnBoard(filed):
 				if filed in self.world.filterPositionsWithoutAnimals(posToCheck):
 					result.append(filed)
-		for strPos in result:
-			print("result")
-			print(strPos.x, strPos.y)
 		return result
 
 	def calculateDodgePath(self, attackPosition):
