@@ -6,6 +6,7 @@ from Organisms.Dandelion import Dandelion
 from Organisms.Wolf import Wolf
 from Organisms.Toadstool import Toadstool
 from Organisms.Antelope import Antelope
+from Organisms.Turtle import Turtle
 import os
 
 

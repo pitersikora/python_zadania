@@ -1,7 +1,9 @@
 from Position import Position
 from Organisms.Plant import Plant
+from Organisms.Animal import Animal
 from Action import Action
 from ActionEnum import ActionEnum
+import random
 
 
 class World(object):
@@ -68,7 +70,18 @@ class World(object):
 		self.organisms = [o for o in self.organisms if self.positionOnBoard(o.position)]
 		for o in self.organisms:
 			o.liveLength -= 1
-			o.power += 1
+			if o.sign is not "@":
+				o.power += 1
+			if isinstance(self.getOrganismFromPosition(o.position), Animal) and o.stomach is not None:
+				if o.stomach.release is True:
+					releasePosition = random.choice(self.filterPositionsWithoutAnimals(self.getNeighboringPositions(o.position)))
+					if releasePosition:
+						o.stomach.position = releasePosition
+						o.stomach.release = False
+						self.newOrganisms.append(o.stomach)
+						o.stomach = None
+				else:
+				 o.stomach.release = True
 			if o.liveLength < 1:
 				print(str(o.__class__.__name__) + ': died of old age at: ' + str(o.position))
 		self.organisms = [o for o in self.organisms if o.liveLength > 0]
