@@ -10,7 +10,7 @@ class Wolf(Animal):
 		return Wolf(self, None, None)
 
 	def initParams(self):
-		self.power = 6
+		self.power = 8
 		self.initiative = 5
 		self.liveLength = 15
 		self.powerToReproduce = 12

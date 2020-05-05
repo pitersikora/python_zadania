@@ -10,7 +10,7 @@ class Sheep(Animal):
 		return Sheep(self, None, None)
 
 	def initParams(self):
-		self.power = 3
+		self.power = 7
 		self.initiative = 3
 		self.liveLength = 10
 		self.powerToReproduce = 6
