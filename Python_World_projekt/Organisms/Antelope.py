@@ -13,10 +13,10 @@ class Antelope(Animal):
 		return Antelope(self, None, None)
 
 	def initParams(self):
-		self.power = 7
+		self.power = 6
 		self.initiative = 7
 		self.liveLength = 12
-		self.powerToReproduce = 8
+		self.powerToReproduce = 13
 		self.sign = 'A'
 
 	def getNeighboringPositions(self):

@@ -10,10 +10,10 @@ class Sheep(Animal):
 		return Sheep(self, None, None)
 
 	def initParams(self):
-		self.power = 7
+		self.power = 6
 		self.initiative = 4
 		self.liveLength = 10
-		self.powerToReproduce = 6
+		self.powerToReproduce = 11
 		self.sign = 'S'
 
 	def getNeighboringPositions(self):
