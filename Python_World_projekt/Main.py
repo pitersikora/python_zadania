@@ -12,24 +12,30 @@ import os
 
 
 if __name__ == '__main__':
-	pyWorld = World(8, 8)
+	pyWorld = World(8, 8, 1)
 
 	newOrg = Grass(position=Position(xPosition=4, yPosition=0), world=pyWorld)
 	pyWorld.addOrganism(newOrg)
 
-	newOrg = Antelope(position=Position(xPosition=2, yPosition=2), world=pyWorld)
+	newOrg = Wolf(position=Position(xPosition=3, yPosition=2), world=pyWorld)
 	pyWorld.addOrganism(newOrg)
 
-	newOrg = Sheep(position=Position(xPosition=0, yPosition=0), world=pyWorld)
+	newOrg = Toadstool(position=Position(xPosition=4, yPosition=1), world=pyWorld)
 	pyWorld.addOrganism(newOrg)
 
-	newOrg = Dandelion(position=Position(xPosition=0, yPosition=4), world=pyWorld)
+	newOrg = Turtle(position=Position(xPosition=7, yPosition=3), world=pyWorld)
 	pyWorld.addOrganism(newOrg)
 
-	newOrg = Wolf(position=Position(xPosition=7, yPosition=7), world=pyWorld)
+	newOrg = Dandelion(position=Position(xPosition=7, yPosition=7), world=pyWorld)
 	pyWorld.addOrganism(newOrg)
 
-	newOrg = Toadstool(position=Position(xPosition=4, yPosition=4), world=pyWorld)
+	newOrg = Antelope(position=Position(xPosition=4, yPosition=4), world=pyWorld)
+	pyWorld.addOrganism(newOrg)
+
+	newOrg = Ufo(position=Position(xPosition=6, yPosition=2), world=pyWorld)
+	pyWorld.addOrganism(newOrg)
+
+	newOrg = Sheep(position=Position(xPosition=2, yPosition=5), world=pyWorld)
 	pyWorld.addOrganism(newOrg)
 
 	print(pyWorld)
