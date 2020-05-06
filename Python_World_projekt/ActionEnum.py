@@ -7,3 +7,4 @@ class ActionEnum(Enum):
 	A_ADD = 2
 	A_INCREASEPOWER = 3
 	A_DODGE = 4
+	A_SWALLOW = 5
