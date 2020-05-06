@@ -35,7 +35,7 @@ class Animal(Organism):
 
 		if pomPositions:
 			newPosition = random.choice(pomPositions)
-			result.append(Action(ActionEnum.A_MOVE, newPosition, 0, self))
+			result.append(Action(ActionEnum.A_MOVE, newPosition, 0, self, self))
 			self.lastPosition = self.position
 			metOrganism = self.world.getOrganismFromPosition(newPosition)
 			if metOrganism is not None:
@@ -53,7 +53,7 @@ class Animal(Organism):
 			newAnimal.initParams()
 			newAnimal.position = newAnimalPosition
 			self.power = self.power / 2
-			result.append(Action(ActionEnum.A_ADD, newAnimalPosition, 0, newAnimal))
+			result.append(Action(ActionEnum.A_ADD, newAnimalPosition, 0, newAnimal, self))
 		return result
 
 	def getNeighboringPositions(self):
@@ -66,13 +66,13 @@ class Animal(Organism):
 		result = []
 
 		if self.power > atackingOrganism.power:
-			result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism))
+			result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
 		else:
 			if self.sign is "@":
-				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
+				result.append(Action(ActionEnum.A_SWALLOW, Position(xPosition=-1, yPosition=-1), 0, self, atackingOrganism))
 				atackingOrganism.stomach = self
 			elif self.sign is "U":
 				atackingOrganism.position = atackingOrganism.lastPosition
 			else:
-				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
+				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self, self))
 		return result

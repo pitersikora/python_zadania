@@ -30,21 +30,21 @@ class Antelope(Animal):
 			pomPositions = self.filterDodgePositions(attacker)
 			if pomPositions:
 				newPosition = random.choice(pomPositions)
-				result.append(Action(ActionEnum.A_DODGE, newPosition, 0, self))
+				result.append(Action(ActionEnum.A_DODGE, newPosition, 0, self, self))
 				self.lastPosition = self.position
 				metOrganism = self.world.getOrganismFromPosition(newPosition)
 				if metOrganism is not None:
 					result.extend(metOrganism.consequences(self))
 			else:
 				if self.power > atackingOrganism.power:
-					result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism))
+					result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
 				else:
-					result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
+					result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self, self))
 		else:
 			if self.power > atackingOrganism.power:
-				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism))
+				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
 			else:
-				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self))
+				result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self, self))
 		return result
 
 	def filterDodgePositions(self, attackerLastPosition):

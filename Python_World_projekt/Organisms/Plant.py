@@ -27,7 +27,7 @@ class Plant(Organism):
 				newPlant.initParams()
 				newPlant.position = newPosition
 				self.power = self.power / 2
-				result.append(Action(ActionEnum.A_ADD, newPosition, 0, newPlant))
+				result.append(Action(ActionEnum.A_ADD, newPosition, 0, newPlant, self))
 		return result
 
 	def getFreeNeighboringPosition(self, position):
