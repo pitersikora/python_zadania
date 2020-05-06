@@ -14,4 +14,6 @@ class Dandelion(Plant):
 		self.initiative = 0
 		self.liveLength = 6
 		self.powerToReproduce = 2
+		self.powerIncreaseRate = 1
+		self.agingRate = 1.3
 		self.sign = 'D'

@@ -14,6 +14,8 @@ class Ufo(Animal):
 		self.initiative = 3
 		self.liveLength = 10
 		self.powerToReproduce = 1
+		self.powerIncreaseRate = 0
+		self.agingRate = 0
 		self.sign = 'U'
 
 	def getNeighboringPositions(self):

@@ -12,6 +12,8 @@ class Organism(ABC):
 		self.__position = None
 		self.__liveLength = None
 		self.__powerToReproduce = None
+		self.__powerIncreaseRate = None
+		self.__agingRate = None
 		self.__sign = None
 		self.__world = None
 
@@ -21,6 +23,8 @@ class Organism(ABC):
 			self.__position = organism.position
 			self.__liveLength = organism.liveLength
 			self.__powerToReproduce = organism.powerToReproduce
+			self.__powerIncreaseRate = organism.powerIncreaseRate
+			self.__agingRate = organism.agingRate
 			self.__sign = organism.sign
 			self.__world = organism.__world
 		else:
@@ -70,6 +74,22 @@ class Organism(ABC):
 	@powerToReproduce.setter
 	def powerToReproduce(self, value):
 		self.__powerToReproduce = value
+
+	@property
+	def powerIncreaseRate(self):
+		return self.__powerIncreaseRate
+
+	@powerIncreaseRate.setter
+	def powerIncreaseRate(self, value):
+		self.__powerIncreaseRate = value
+
+	@property
+	def agingRate(self):
+		return self.__agingRate
+
+	@agingRate.setter
+	def agingRate(self, value):
+		self.__agingRate = value
 
 	@property
 	def sign(self):

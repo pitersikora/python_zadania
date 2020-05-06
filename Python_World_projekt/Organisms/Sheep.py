@@ -14,6 +14,8 @@ class Sheep(Animal):
 		self.initiative = 4
 		self.liveLength = 10
 		self.powerToReproduce = 11
+		self.powerIncreaseRate = 1
+		self.agingRate = 0.85
 		self.sign = 'S'
 
 	def getNeighboringPositions(self):

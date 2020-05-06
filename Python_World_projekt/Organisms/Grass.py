@@ -14,4 +14,6 @@ class Grass(Plant):
 		self.initiative = 0
 		self.liveLength = 6
 		self.powerToReproduce = 3
+		self.powerIncreaseRate = 1
+		self.agingRate = 0.5
 		self.sign = 'G'

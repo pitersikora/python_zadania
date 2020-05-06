@@ -16,8 +16,11 @@ class Antelope(Animal):
 		self.power = 6
 		self.initiative = 7
 		self.liveLength = 12
-		self.powerToReproduce = 13
+		self.powerToReproduce = 12
+		self.powerIncreaseRate = 1
+		self.agingRate = 0.75
 		self.sign = 'A'
+
 
 	def getNeighboringPositions(self):
 		return self.world.filterPositionsWithoutAnimals(self.world.getNeighboringPositions(self.position))

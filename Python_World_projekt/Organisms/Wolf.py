@@ -12,8 +12,10 @@ class Wolf(Animal):
 	def initParams(self):
 		self.power = 8
 		self.initiative = 5
-		self.liveLength = 15
+		self.liveLength = 12
 		self.powerToReproduce = 12
+		self.powerIncreaseRate = 1
+		self.agingRate = 1
 		self.sign = 'W'
 
 	def getNeighboringPositions(self):

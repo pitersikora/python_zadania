@@ -13,7 +13,9 @@ class Turtle(Animal):
 		self.power = 6
 		self.initiative = 2
 		self.liveLength = 80
-		self.powerToReproduce = 10
+		self.powerToReproduce = 7
+		self.powerIncreaseRate = 0.05
+		self.agingRate = 1
 		self.sign = '@'
 		self.release = False
 

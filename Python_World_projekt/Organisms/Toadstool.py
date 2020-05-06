@@ -17,6 +17,8 @@ class Toadstool(Plant):
 		self.initiative = 0
 		self.liveLength = 10
 		self.powerToReproduce = 5
+		self.powerIncreaseRate = 1
+		self.agingRate = 1
 		self.sign = 'T'
 
 	def consequences(self, atackingOrganism):
