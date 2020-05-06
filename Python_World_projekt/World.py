@@ -8,13 +8,15 @@ import random
 
 class World(object):
 
-	def __init__(self, worldX, worldY):
+	def __init__(self, worldX, worldY, wellfarePenalty):
 		self.__worldX = worldX
 		self.__worldY = worldY
+		self.__wellfarePenalty = wellfarePenalty
 		self.__turn = 0
 		self.__organisms = []
 		self.__newOrganisms = []
 		self.__stopTime = []
+		self.__organismsAmmount = {}
 		self.__separator = ' '
 
 	@property
@@ -24,6 +26,10 @@ class World(object):
 	@property
 	def worldY(self):
 		return self.__worldY
+
+	@property
+	def wellfarePenalty(self):
+		return self.__wellfarePenalty
 
 	@property
 	def turn(self):
@@ -58,6 +64,14 @@ class World(object):
 		self.__newOrganisms = value
 
 	@property
+	def organismsAmmount(self):
+		return self.__organismsAmmount
+
+	@organismsAmmount.setter
+	def organismsAmmount(self, value):
+		self.__organismsAmmount = value
+
+	@property
 	def separator(self):
 		return self.__separator
 
@@ -81,13 +95,8 @@ class World(object):
 		self.organisms = [o for o in self.organisms if self.positionOnBoard(o.position)]
 		for o in self.organisms:
 			if o.position not in self.stopTime:
-				if o.sign is not "U":
-					o.liveLength -= 1
-				if o.sign is not "@" and o.sign is not "U":
-					o.power += 1
-				elif o.sign is "@":
-					o.power += 0.025
-					print(o.power)
+				o.liveLength -= self.calculateAging(o)
+				o.power += o.powerIncreaseRate
 				if isinstance(self.getOrganismFromPosition(o.position), Animal) and o.stomach is not None:
 					if o.stomach.release is True:
 						releasePosition = random.choice(self.filterPositionsWithoutAnimals(self.getNeighboringPositions(o.position)))
@@ -101,10 +110,12 @@ class World(object):
 				if o.liveLength < 1:
 					print(str(o.__class__.__name__) + ': died of old age at: ' + str(o.position))
 		self.organisms = [o for o in self.organisms if o.liveLength > 0]
-
+		self.organismsAmmount = {}
 		self.newOrganisms = [o for o in self.newOrganisms if self.positionOnBoard(o.position)]
 		self.organisms.extend(self.newOrganisms)
 		self.organisms.sort(key=lambda o: o.initiative, reverse=True)
+		for creature in self.organisms:
+			self.countOrganisms(creature)
 		self.newOrganisms = []
 		self.stopTime = []
 
@@ -130,12 +141,25 @@ class World(object):
 
 		if self.positionOnBoard(newOrgPosition):
 			self.organisms.append(newOrganism)
+			if newOrganism.sign not in self.organismsAmmount:
+				self.organismsAmmount[newOrganism.sign] = 1
+			else:
+				self.organismsAmmount[newOrganism.sign] += 1
 			self.organisms.sort(key=lambda org: org.initiative, reverse=True)
 			return True
 		return False
 
 	def positionOnBoard(self, position):
 		return position.x >= 0 and position.y >= 0 and position.x < self.worldX and position.y < self.worldY
+
+	def countOrganisms(self, organism):
+		if organism.sign not in self.organismsAmmount:
+			self.organismsAmmount[organism.sign] = 1
+		else:
+			self.organismsAmmount[organism.sign] += 1
+
+	def calculateAging(self, organism):
+		return organism.agingRate + ((self.wellfarePenalty*self.organismsAmmount[organism.sign])*0.036)
 
 	def getOrganismFromPosition(self, position):
 		pomOrganism = None
