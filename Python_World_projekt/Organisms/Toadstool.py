@@ -6,27 +6,27 @@ from ActionEnum import ActionEnum
 
 class Toadstool(Plant):
 
-	def __init__(self, toadstool=None, position=None, world=None):
-		super(Toadstool, self).__init__(toadstool, position, world)
+  def __init__(self, toadstool=None, position=None, world=None):
+    super(Toadstool, self).__init__(toadstool, position, world)
 
-	def clone(self):
-		return Toadstool(self, None, None)
+  def clone(self):
+    return Toadstool(self, None, None)
 
-	def initParams(self):
-		self.power = 0
-		self.initiative = 0
-		self.liveLength = 10
-		self.powerToReproduce = 5
-		self.powerIncreaseRate = 1
-		self.agingRate = 1
-		self.sign = 'T'
+  def initParams(self):
+    self.power = 0
+    self.initiative = 0
+    self.liveLength = 10
+    self.powerToReproduce = 5
+    self.powerIncreaseRate = 1
+    self.agingRate = 1
+    self.sign = 'T'
 
-	def consequences(self, atackingOrganism):
-		result = []
+  def consequences(self, atackingOrganism):
+    result = []
 
-		if self.power > atackingOrganism.power:
-			result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
-		else:
-			result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self, self))
-			result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
-		return result
+    if self.power > atackingOrganism.power:
+      result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
+    else:
+      result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, self, self))
+      result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
+    return result
