@@ -85,6 +85,9 @@ class World(object):
 					o.liveLength -= 1
 				if o.sign is not "@" and o.sign is not "U":
 					o.power += 1
+				elif o.sign is "@":
+					o.power += 0.025
+					print(o.power)
 				if isinstance(self.getOrganismFromPosition(o.position), Animal) and o.stomach is not None:
 					if o.stomach.release is True:
 						releasePosition = random.choice(self.filterPositionsWithoutAnimals(self.getNeighboringPositions(o.position)))
@@ -116,6 +119,10 @@ class World(object):
 		elif action.action == ActionEnum.A_MOVE:
 			action.organism.position = action.position
 		elif action.action == ActionEnum.A_REMOVE:
+			action.organism.position = Position(xPosition=-1, yPosition=-1)
+		elif action.action == ActionEnum.A_DODGE:
+			action.organism.position = action.position
+		elif action.action == ActionEnum.A_SWALLOW:
 			action.organism.position = Position(xPosition=-1, yPosition=-1)
 
 	def addOrganism(self, newOrganism):
