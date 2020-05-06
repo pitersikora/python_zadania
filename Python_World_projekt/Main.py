@@ -41,7 +41,6 @@ if __name__ == '__main__':
 	print(pyWorld)
 
 	for _ in range(0, 100):
-		input('')
-		os.system('clear')
 		pyWorld.makeTurn()
+		os.system('clear')
 		print(pyWorld)

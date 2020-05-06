@@ -3,6 +3,14 @@ from Organisms.Plant import Plant
 from Organisms.Animal import Animal
 from Action import Action
 from ActionEnum import ActionEnum
+from Organisms.Grass import Grass
+from Organisms.Sheep import Sheep
+from Organisms.Dandelion import Dandelion
+from Organisms.Wolf import Wolf
+from Organisms.Toadstool import Toadstool
+from Organisms.Antelope import Antelope
+from Organisms.Turtle import Turtle
+from Organisms.Ufo import Ufo
 import random
 
 
@@ -118,6 +126,7 @@ class World(object):
 			self.countOrganisms(creature)
 		self.newOrganisms = []
 		self.stopTime = []
+		self.manuallyAddOrganism()
 
 		self.turn += 1
 
@@ -211,6 +220,36 @@ class World(object):
 			if not isinstance(pomOrg, species):
 				result.append(filed)
 		return result
+
+	def manuallyAddOrganism(self):
+		option = input('\nDo you want to add new organism? (type y to add)\n')
+		if option == 'y':
+			creatures = [cls.__name__ for cls in Animal.__subclasses__()]+[cls.__name__ for cls in Plant.__subclasses__()]
+			creatureOption = ''
+			while creatureOption not in creatures:
+				creatureOption = input("Choose one of the creatures to add: {}\n".format(creatures))
+			positions = []
+			for x in range(0,self.worldX):
+				for y in range(0, self.worldY):
+					positions.append(Position(xPosition=x, yPosition=y))
+			positions = self.filterFreePositions(positions)
+			printCounter = positions[0].x
+			for index, pos in enumerate(positions):
+				if printCounter == pos.x:
+					print('{0}. {1}'.format(index, pos), end='\t')
+				else:
+					printCounter = pos.x
+					print('\n{0}. {1}'.format(index, pos), end='\t')
+			posOption = -1
+			while posOption not in range(0, len(positions)):
+				try:
+					posOption = int(input("\nChoose one of the creatures to add:\n"))
+				except ValueError:
+					print('\nPlease use digits only !!!')
+			newOrg = globals()[creatureOption](position=Position(xPosition=positions[posOption].x, yPosition=positions[posOption].y), world=self)
+			self.stopTime.append(newOrg.position)
+			self.addOrganism(newOrg)
+
 
 	def __str__(self):
 		result = '\nturn: ' + str(self.__turn) + '\n'
