@@ -17,6 +17,7 @@ class Turtle(Animal):
     self.powerIncreaseRate = 0.05
     self.agingRate = 1
     self.sign = '@'
+    # new variable: release to make turtle stay in stomach for one turn
     self.release = False
 
   def getNeighboringPositions(self):

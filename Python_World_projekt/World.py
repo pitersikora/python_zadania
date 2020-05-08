@@ -19,10 +19,33 @@ class World(object):
   def __init__(self, worldX, worldY, wellfarePenalty):
     self.__worldX = worldX
     self.__worldY = worldY
+    """
+    new attribute:
+
+    wellfarePenalty - attribute which is a world parameter
+    it is used in formula for increasing agingRate when
+    there is many representants of one organism
+    (e.g. formula is preventing from making too much Grass and Dandelion)
+    the bigger wellfarePenalty value, more penalty is given
+    """
     self.__wellfarePenalty = wellfarePenalty
     self.__turn = 0
     self.__organisms = []
     self.__newOrganisms = []
+    """
+    new "data containers":
+
+    stopTime - list of positions where animals don't take any actions
+    stopTime is filled with positions around Ufo
+    if organism position is equal to any of the position from
+    stopTime list, then this organism skips turn
+
+    organismsAmmount - dict where each organism sign is key
+    and value is ammount of this type of organism
+    these values are used for agingRate calculation
+    due to some implementations used in PythonWorld
+    we have to count organisms each turn
+    """
     self.__stopTime = []
     self.__organismsAmmount = {}
     self.__separator = ' '
@@ -85,10 +108,12 @@ class World(object):
 
   def makeTurn(self):
     actions = []
+    # loop for getting stopTime positions from every Ufo's surroundings
     for species in self.organisms:
       if species.sign is "U":
         self.stopTime.extend(self.getNeighboringPositions(species.position))
     for org in self.organisms:
+      # if organism position is in stopTime list then don't make actions
       if self.positionOnBoard(org.position) and org.position not in self.stopTime:
         actions = org.move()
         for a in actions:
@@ -102,17 +127,35 @@ class World(object):
 
     self.organisms = [o for o in self.organisms if self.positionOnBoard(o.position)]
     for o in self.organisms:
+      """
+      if organism position is in stopTime list then
+      don't reduce liveLength
+      don't increase power
+      """
       if o.position not in self.stopTime:
+        # use aging formula to calculate how much liveLength has to be reduced
         o.liveLength -= self.calculateAging(o)
+        # e.g. Ufo's powerIncreaseRate is 0 so Ufo doesn't get stronger
         o.power += o.powerIncreaseRate
+        # if organism is animal and has something in stomach
         if isinstance(self.getOrganismFromPosition(o.position), Animal) and o.stomach is not None:
+          # if turtle was swallowed earlier then release it from stomach
           if o.stomach.release is True:
+            # filter for positions without animals around the animal who swallowed the turtle and choose random
             releasePosition = random.choice(self.filterPositionsWithoutAnimals(self.getNeighboringPositions(o.position)))
+            """
+            if there is any valid position to release the turtle then:
+            change turtle position to releasePosition
+            "close stomach" so next turtle swallowed won't be released at the same turn
+            add turtle to newOrganisms list
+            delete the remaining copy of turtle in stomach
+            """
             if releasePosition:
               o.stomach.position = releasePosition
               o.stomach.release = False
               self.newOrganisms.append(o.stomach)
               o.stomach = None
+          # if turtle is swallowed this turn switch stomach.release value to release turtle next turn
           else:
            o.stomach.release = True
         if o.liveLength < 1:
@@ -123,15 +166,16 @@ class World(object):
     self.organisms.extend(self.newOrganisms)
     self.organisms.sort(key=lambda o: o.initiative, reverse=True)
     for creature in self.organisms:
+    # go through organisms, count them and put results into organismsAmmount dict
       self.countOrganisms(creature)
     self.newOrganisms = []
     self.stopTime = []
-    self.manuallyAddOrganism()
 
     self.turn += 1
 
   def makeMove(self, action):
     print(action)
+    # new actions added: dodge and swallow
     if action.action == ActionEnum.A_ADD:
       self.newOrganisms.append(action.organism)
     elif action.action == ActionEnum.A_INCREASEPOWER:
@@ -150,6 +194,7 @@ class World(object):
 
     if self.positionOnBoard(newOrgPosition):
       self.organisms.append(newOrganism)
+      # if/else for counting animals at turn 0
       if newOrganism.sign not in self.organismsAmmount:
         self.organismsAmmount[newOrganism.sign] = 1
       else:
@@ -161,12 +206,17 @@ class World(object):
   def positionOnBoard(self, position):
     return position.x >= 0 and position.y >= 0 and position.x < self.worldX and position.y < self.worldY
 
+  # method for counting animals and puting results into organismsAmmount dict
   def countOrganisms(self, organism):
     if organism.sign not in self.organismsAmmount:
       self.organismsAmmount[organism.sign] = 1
     else:
       self.organismsAmmount[organism.sign] += 1
 
+  """
+  method for calulate aging:
+  wellfarePenalty and organismsAmmount[organism.sign] are directly proportional to formula result
+  """
   def calculateAging(self, organism):
     return organism.agingRate + ((self.wellfarePenalty*self.organismsAmmount[organism.sign])*0.036)
 
@@ -224,29 +274,43 @@ class World(object):
   def manuallyAddOrganism(self):
     option = input('\nDo you want to add new organism? (type y to add)\n')
     if option == 'y':
+      # get names of all organisms from subclasses Animal nad Plant to show them to user
       creatures = [cls.__name__ for cls in Animal.__subclasses__()]+[cls.__name__ for cls in Plant.__subclasses__()]
       creatureOption = ''
+      # while user input doesn't match any of the organisms names ask user to pick organisms to add
       while creatureOption not in creatures:
         creatureOption = input("Choose one of the creatures to add: {}\n".format(creatures))
       positions = []
+      # add every position in the world to positions list
       for x in range(0,self.worldX):
         for y in range(0, self.worldY):
           positions.append(Position(xPosition=x, yPosition=y))
+      # filter positions if they are free
       positions = self.filterFreePositions(positions)
+      # guard variable for printing postitions with same "x" value in same line
       printCounter = positions[0].x
+      # print enumeration and free position "x" and "y" so user can choose position by its number
       for index, pos in enumerate(positions):
         if printCounter == pos.x:
           print('{0}. {1}'.format(index, pos), end='\t')
+        # if position has new "x" set new guard variable and print it in new line
         else:
           printCounter = pos.x
           print('\n{0}. {1}'.format(index, pos), end='\t')
       posOption = -1
+      # try/catch for user input validation
       while posOption not in range(0, len(positions)):
         try:
           posOption = int(input("\nChoose one of the creatures to add:\n"))
         except ValueError:
           print('\nPlease use digits only !!!')
+      """
+      globals() builtin is used to take creatureOption and position indexed with posOption:
+      create instance of the same class as creatureOption string
+      put new organism in the same position as position[posOption]
+      """
       newOrg = globals()[creatureOption](position=Position(xPosition=positions[posOption].x, yPosition=positions[posOption].y), world=self)
+      # prevent added organism from moving the same turn
       self.stopTime.append(newOrg.position)
       self.addOrganism(newOrg)
 

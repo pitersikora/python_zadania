@@ -1,6 +1,7 @@
 from .Organism import Organism
 from Action import Action
 from ActionEnum import ActionEnum
+# imported position due to added consequences for all animals
 from Position import Position
 import random
 
@@ -10,6 +11,7 @@ class Animal(Organism):
   def __init__(self, animal=None, position=None, world=None):
     super(Animal, self).__init__(animal, position, world)
     self.__lastPosition = position
+    # all animals have stomach, where they "store" swallowed turtles
     self.__stomach = None
 
   @property
@@ -62,15 +64,24 @@ class Animal(Organism):
   def getNeighboringBirthPositions(self):
     return self.world.filterFreePositions(self.world.getNeighboringPositions(self.position))
 
+# added consequences method which is common for all animals
   def consequences(self, atackingOrganism):
     result = []
 
     if self.power > atackingOrganism.power:
       result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
     else:
+      """
+      if organism has less power than attacker and is a turtle
+      "original" turtle copy is removed from world as normal
+      turtle is copied and swallowed by attacker by appending into "stomach"
+      here we use action.attacker variable to implement printing:
+      Wolf: swallowed a turtle at : (0,2)
+      """
       if self.sign is "@":
         result.append(Action(ActionEnum.A_SWALLOW, Position(xPosition=-1, yPosition=-1), 0, self, atackingOrganism))
         atackingOrganism.stomach = self
+      # if organism is attacking Ufo, return to last position (you cannot attack Ufo)
       elif self.sign is "U":
         atackingOrganism.position = atackingOrganism.lastPosition
       else:

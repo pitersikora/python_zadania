@@ -8,6 +8,9 @@ class Action(object):
     self.__position = position
     self.__value = value
     self.__organism = organism
+    """
+    added attacker for printing actions where "3rd party" animal is doing something
+    """
     self.__attacker = attacker
 
   @property
@@ -38,6 +41,7 @@ class Action(object):
       ActionEnum.A_INCREASEPOWER: '{0} increase power: {1}'.format(organismName, self.value),
       ActionEnum.A_MOVE: '{0} move from: {1} to: {2}'.format(organismName, self.organism.position, self.position),
       ActionEnum.A_REMOVE: '{0} remove from: {1}'.format(organismName, self.organism.position),
+      # added new action prints: dodge(for Antelope), swallow(for animals who can attack turtle)
       ActionEnum.A_DODGE: '{0} dodged from: {1} to: {2}'.format(organismName, self.organism.position, self.position),
       ActionEnum.A_SWALLOW: '{0}: swallowed a turtle at: {1}'.format(attackerName, self.attacker.position)
     }

@@ -25,12 +25,24 @@ class Antelope(Animal):
   def getNeighboringPositions(self):
     return self.world.filterPositionsWithoutAnimals(self.world.getNeighboringPositions(self.position))
 
+# for antelope consequences are different because of dodge mechanics
   def consequences(self, atackingOrganism):
     result = []
+    """
+    if Wolf is attacking an Antelope, filter available position to dodge
+    dodge positions are 2 fields away from the Antelope
+    rest is the same as move action
+    """
     if atackingOrganism.sign == 'W':
+      """
+      attacker position is taken to choose proper positions to dodge
+      look into calculateDodgePath method
+      """
       attacker = atackingOrganism.lastPosition
       newPosition = None
+      # filter for dodge positions availability
       pomPositions = self.filterDodgePositions(attacker)
+      # if there are positions to dodge then do it
       if pomPositions:
         newPosition = random.choice(pomPositions)
         result.append(Action(ActionEnum.A_DODGE, newPosition, 0, self, self))
@@ -38,6 +50,7 @@ class Antelope(Animal):
         metOrganism = self.world.getOrganismFromPosition(newPosition)
         if metOrganism is not None:
           result.extend(metOrganism.consequences(self))
+      # if dodge positions are not free do the usual fighting
       else:
         if self.power > atackingOrganism.power:
           result.append(Action(ActionEnum.A_REMOVE, Position(xPosition=-1, yPosition=-1), 0, atackingOrganism, self))
@@ -51,6 +64,10 @@ class Antelope(Animal):
     return result
 
   def filterDodgePositions(self, attackerLastPosition):
+    """
+    Method for checking dodge fields availability
+    Antelope can dodge into plant. It will eat it after dodging
+    """
     result = []
     pomPositions = []
     pomPositions = self.calculateDodgePath(attackerLastPosition)
@@ -58,6 +75,7 @@ class Antelope(Animal):
       posToCheck = []
       posToCheck.append(filed)
       if self.world.positionOnBoard(filed):
+        # field with plant in it is valid for dodging
         if filed in self.world.filterPositionsWithoutAnimals(posToCheck):
           result.append(filed)
     return result
@@ -66,6 +84,10 @@ class Antelope(Animal):
     positionsToDodge = []
     if attackPosition.x == self.position.x:
       """
+      W is Wolf
+      A is Antelope
+      D are Dodge positions
+
       wolf attacking
         |1|2|3|4|5|
       |1|D   D   D

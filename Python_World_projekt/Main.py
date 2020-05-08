@@ -5,6 +5,7 @@ from Organisms.Sheep import Sheep
 from Organisms.Dandelion import Dandelion
 from Organisms.Wolf import Wolf
 from Organisms.Toadstool import Toadstool
+# added imports for new organisms
 from Organisms.Antelope import Antelope
 from Organisms.Turtle import Turtle
 from Organisms.Ufo import Ufo
@@ -12,6 +13,7 @@ import os
 
 
 if __name__ == '__main__':
+  # wellfarePenalty as world parameter (third variable)
   pyWorld = World(8, 8, 1)
 
   newOrg = Grass(position=Position(xPosition=4, yPosition=0), world=pyWorld)

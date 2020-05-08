@@ -12,6 +12,24 @@ class Organism(ABC):
     self.__position = None
     self.__liveLength = None
     self.__powerToReproduce = None
+    """
+    new attributes:
+
+    powerIncreaseRate - to differenciate power increase between
+    Turtle (slow metabolism)
+    Ufo (no power increase)
+    and other organisms powerIncreaseRate has been added
+    to give an opportunity to set this parameter without making "ifs"
+    in world.makeTurn
+
+    agingRate - to differenciate aging rate between
+    Ufo (no aging)
+    and other organisms
+    and to help implement aging formula agingRate has been added
+    also this variable reduces number of "ifs"
+    in world.makeTurn
+
+    """
     self.__powerIncreaseRate = None
     self.__agingRate = None
     self.__sign = None
