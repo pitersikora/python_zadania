@@ -301,7 +301,7 @@ class World(object):
       # try/catch for user input validation
       while posOption not in range(0, len(positions)):
         try:
-          posOption = int(input("\nChoose one of the creatures to add:\n"))
+          posOption = int(input("\nChoose the number of position where to add the organism:\n"))
         except ValueError:
           print('\nPlease use digits only !!!')
       """
