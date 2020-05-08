@@ -44,3 +44,13 @@ Do egzekucji programów należy używać interpretera Python w wersji 3.
     * Program sortujący podaną listę liczb metodą wstawiania `insertsort.py`
 
     * Program obliczający wyrażenie arytmetyczne podane w odwrotnej notacji polskiej `postfix.py`
+
+1. Do programu Python World w wersji final dodaj nowe typy organizmów:
+
+    * Antylopa: zachowuje się jak owca, z tym, że jeżeli w jej otoczeniu pojawi wilk, to ucieka od niego o dwa pola (kierunek odwrotny do występowania wilka), jeżeli ucieczka nie jest możliwa, atakuje wilka.
+    * Żółw: posiada wolny metabolizm, zjada rośliny, może zatruć się grzybem, rozmnaża się rzadko i długo żyje, po zjedzeniu przez inne zwierze, znika na jedną turę ale jako niejadalny zostaje wypluty przez zjadającego w kolejnej turze i żyje sobie dalej.
+    * Kosmita: porusza się po planszy i zatrzymuje czas na polach, które są wokół niego (odstęp 1), tj. mijające tury nie mają wpływu na organizmy wokół kosmity, kosmita nie zjada niczego ani nic nie zjada kosmity.
+    * Dodaj funkcjonalność ochrona przyrody. Polega ona na tym, że świat stara się zachować zdrowe proporcje poszczególnych gatunków, promując ginące a utrudniając życie zbyt ekspansywnym. Ustalenie proporcji może być parametrem powstania świata.
+    * Zaimplementować możliwość dodania po dowolnej turze dowolnego nowego organizmu na dowolne wolne pole.
+
+    Zalecane jest zapoznanie się z komentarzami dodanymi do zmodyfikowanego kodu programu: [Link do commita](https://github.com/TBorzyszkowskiForEducation/pythonzadania-pitersikora/commit/8837d71fd7c02c5f73a36b225bcfd5bb611b382e).
