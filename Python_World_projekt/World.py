@@ -218,7 +218,7 @@ class World(object):
   wellfarePenalty and organismsAmmount[organism.sign] are directly proportional to formula result
   """
   def calculateAging(self, organism):
-    return organism.agingRate + ((self.wellfarePenalty*self.organismsAmmount[organism.sign])*0.036)
+    return organism.agingRate * (organism.agingRate + ((self.wellfarePenalty*self.organismsAmmount[organism.sign])*0.036))
 
   def getOrganismFromPosition(self, position):
     pomOrganism = None
