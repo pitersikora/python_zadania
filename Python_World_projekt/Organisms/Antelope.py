@@ -18,7 +18,7 @@ class Antelope(Animal):
     self.liveLength = 12
     self.powerToReproduce = 12
     self.powerIncreaseRate = 1
-    self.agingRate = 0.75
+    self.agingRate = 0.90
     self.sign = 'A'
 
 
