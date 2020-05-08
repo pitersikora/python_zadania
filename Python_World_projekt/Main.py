@@ -41,8 +41,15 @@ if __name__ == '__main__':
   pyWorld.addOrganism(newOrg)
 
   print(pyWorld)
+  pyWorld.manuallyAddOrganism()
 
   for _ in range(0, 100):
+    """
+    line input('') has been deleted due to manuallyAddOrganism implementation
+    os.system('cls') has been changed to ('clear') for Linux compatibility
+    line order has been changed due to manuallyAddOrganism implementation
+    """
     pyWorld.makeTurn()
-    os.system('clear')
     print(pyWorld)
+    pyWorld.manuallyAddOrganism()
+    os.system('clear')
