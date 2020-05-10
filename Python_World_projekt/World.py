@@ -110,7 +110,7 @@ class World(object):
     actions = []
     # loop for getting stopTime positions from every Ufo's surroundings
     for species in self.organisms:
-      if species.sign is "U":
+      if isinstance(species, Ufo):
         self.stopTime.extend(self.getNeighboringPositions(species.position))
     for org in self.organisms:
       # if organism position is in stopTime list then don't make actions
