@@ -309,7 +309,13 @@ class World(object):
       create instance of the same class as creatureOption string
       put new organism in the same position as position[posOption]
       """
-      newOrg = globals()[creatureOption](position=Position(xPosition=positions[posOption].x, yPosition=positions[posOption].y), world=self)
+      newOrg = globals()[creatureOption](
+          position=Position(
+            xPosition=positions[posOption].x,
+            yPosition=positions[posOption].y
+                           ),
+          world=self
+          )
       # prevent added organism from moving the same turn
       self.stopTime.append(newOrg.position)
       self.addOrganism(newOrg)

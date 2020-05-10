@@ -80,9 +80,9 @@ class Antelope(Animal):
           result.append(filed)
     return result
 
-  def calculateDodgePath(self, attackPosition):
-    positionsToDodge = []
-    if attackPosition.x == self.position.x:
+  def calculateDodgePath(self, attPos):
+    dodgePos = []
+    if attPos.x == self.position.x:
       """
       W is Wolf
       A is Antelope
@@ -104,10 +104,22 @@ class Antelope(Animal):
       |3|
       |4|D   D   D
       """
-      positionsToDodge.append(Position(xPosition=self.position.x - (attackPosition.y-self.position.y)*2, yPosition=self.position.y-(attackPosition.y-self.position.y)*2))
-      positionsToDodge.append(Position(xPosition=self.position.x, yPosition=self.position.y-(attackPosition.y-self.position.y)*2))
-      positionsToDodge.append(Position(xPosition=self.position.x + (attackPosition.y-self.position.y)*2, yPosition=self.position.y-(attackPosition.y-self.position.y)*2))
-    elif attackPosition.y == self.position.y:
+      dodgePos.append(Position(
+          xPosition=self.position.x - (attPos.y-self.position.y)*2,
+          yPosition=self.position.y - (attPos.y-self.position.y)*2
+                              )
+          )
+      dodgePos.append(Position(
+          xPosition=self.position.x,
+          yPosition=self.position.y - (attPos.y-self.position.y)*2
+                              )
+          )
+      dodgePos.append(Position(
+          xPosition=self.position.x + (attPos.y-self.position.y)*2,
+          yPosition=self.position.y - (attPos.y-self.position.y)*2
+                              )
+          )
+    elif attPos.y == self.position.y:
       """
       wolf attacking
         |1|2|3|4|5|
@@ -127,9 +139,21 @@ class Antelope(Animal):
       |4|
       |5|  D
       """
-      positionsToDodge.append(Position(xPosition=self.position.x - (attackPosition.x-self.position.x)*2, yPosition=self.position.y - (attackPosition.x-self.position.x)*2))
-      positionsToDodge.append(Position(xPosition=self.position.x - (attackPosition.x-self.position.x)*2, yPosition=self.position.y))
-      positionsToDodge.append(Position(xPosition=self.position.x - (attackPosition.x-self.position.x)*2, yPosition=self.position.y + (attackPosition.x-self.position.x)*2))
+      dodgePos.append(Position(
+          xPosition=self.position.x - (attPos.x-self.position.x)*2,
+          yPosition=self.position.y - (attPos.x-self.position.x)*2
+                              )
+          )
+      dodgePos.append(Position(
+          xPosition=self.position.x - (attPos.x-self.position.x)*2,
+          yPosition=self.position.y
+                              )
+          )
+      dodgePos.append(Position(
+          xPosition=self.position.x - (attPos.x-self.position.x)*2,
+          yPosition=self.position.y + (attPos.x-self.position.x)*2
+                              )
+          )
     else:
       """
       wolf attacking
@@ -142,7 +166,19 @@ class Antelope(Animal):
 
       ETC.
       """
-      positionsToDodge.append(Position(xPosition=self.position.x + (self.position.x-attackPosition.x)*2, yPosition=self.position.y))
-      positionsToDodge.append(Position(xPosition=self.position.x + (self.position.x-attackPosition.x)*2, yPosition=self.position.y + (self.position.y-attackPosition.y)*2))
-      positionsToDodge.append(Position(xPosition=self.position.x, yPosition=self.position.y + (self.position.y-attackPosition.y)*2))
-    return positionsToDodge
+      dodgePos.append(Position(
+          xPosition=self.position.x + (self.position.x-attPos.x)*2,
+          yPosition=self.position.y
+                              )
+          )
+      dodgePos.append(Position(
+          xPosition=self.position.x + (self.position.x-attPos.x)*2,
+          yPosition=self.position.y + (self.position.y-attPos.y)*2
+                              )
+          )
+      dodgePos.append(Position(
+          xPosition=self.position.x,
+          yPosition=self.position.y + (self.position.y-attPos.y)*2
+                              )
+          )
+    return dodgePos
